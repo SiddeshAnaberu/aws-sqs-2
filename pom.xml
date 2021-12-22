@@ -37,7 +37,7 @@
 						<muleVersion>4.3.0</muleVersion>
 						<username>siddeshtest</username>
 						<password>Ganesha@123</password>
-						<applicationName>bookmyshowpoctest</applicationName>
+						<applicationName>awssqs</applicationName>
 						<environment>Sandbox</environment>
 						<workers>1</workers>
 						<workerType>MICRO</workerType>
