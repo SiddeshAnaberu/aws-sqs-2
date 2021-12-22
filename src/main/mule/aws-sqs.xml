@@ -9,13 +9,13 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 http://www.mulesoft.org/schema/mule/s3 http://www.mulesoft.org/schema/mule/s3/current/mule-s3.xsd
 http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
 	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="99a849f4-8083-4fab-9b06-784d7eff2d80" >
-		<http:listener-connection host="0.0.0.0" port="8081" />
+		<http:listener-connection host="0.0.0.0" port="8080" />
 	</http:listener-config>
 	<sqs:config name="Amazon_SQS_Configuration" doc:name="Amazon SQS Configuration" doc:id="086d69da-b1a6-40bc-b439-435012f696d2" >
 		<sqs:basic-connection accessKey="AKIAUBCLFDUHR3OG7F5E" secretKey="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" />
 	</sqs:config>
 	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="bc8408ad-3317-41ae-b014-251bf16e2ca5" >
-		<http:request-connection host="localhost" port="8081" />
+		<http:request-connection host="localhost" port="8080" />
 	</http:request-config>
 	<s3:config name="Amazon_S3_Configuration" doc:name="Amazon S3 Configuration" doc:id="3fab4cc3-31a5-4c21-a726-54e90a8ae529" >
 		<s3:basic-connection accessKey="AKIAUBCLFDUH6W63CZ6X" secretKey="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" region="US_EAST_2"/>
@@ -219,7 +219,21 @@ output application/json
 }]]></ee:set-payload>
 					</ee:message>
 				</ee:transform>
-				<logger level="INFO" doc:name="Logger" doc:id="dbad0cb3-d111-4fdc-a5ef-63b791eb8b3e" message="#[%dw 2.0&#10;&#10;output application/json&#10;&#10;---&#10;&#10;{&#10;&#10;    severity: &quot;Error&quot;,&#10;&#10;    eventType: &quot;MulesLogs&quot;,&#10;&#10;    env: &quot;DEV&quot;,&#10;&#10;    messageId: uuid() as String,&#10;&#10;    muleAppName: &quot;policy-demo1&quot;,&#10;&#10;    intgCreationDate: now() as String {format: &quot;yyyy-MM-dd'T'HH:mm:ss.ss'Z'&quot;},&#10;&#10;    payload: write(error.detailedDescription,'application/json'),&#10;&#10;    resultMessage: error.detailedDescription default ' ',&#10;&#10;    result: &quot;Error&quot;,&#10;&#10;    action: &quot;Error caught&quot;&#10;&#10;}]" />
+				<logger level="INFO" doc:name="Logger" doc:id="dbad0cb3-d111-4fdc-a5ef-63b791eb8b3e" message="#[%dw 2.0
+&#10;&#10;output application/json
+&#10;&#10;---
+&#10;&#10;{
+&#10;&#10;    severity: &quot;Error&quot;,
+&#10;&#10;    eventType: &quot;MulesLogs&quot;,
+&#10;&#10;    env: &quot;DEV&quot;,
+&#10;&#10;    messageId: uuid() as String,
+&#10;&#10;    muleAppName: &quot;policy-demo1&quot;,
+&#10;&#10;    intgCreationDate: now() as String {format: &quot;yyyy-MM-dd'T'HH:mm:ss.ss'Z'&quot;},
+&#10;&#10;    payload: write(error.detailedDescription,'application/json'),
+&#10;&#10;    resultMessage: error.detailedDescription default ' ',
+&#10;&#10;    result: &quot;Error&quot;,
+&#10;&#10;    action: &quot;Error caught&quot;
+&#10;&#10;}]" />
 			</on-error-propagate>
 			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="0fed13c5-e445-46ae-92ff-851a57adb16c" type="SQS:ACCESS_DENIED, SQS:CONNECTIVITY, SQS:INTERNAL_FAILURE, SQS:INVALID_CREDENTIALS, SQS:INVALID_DATA, SQS:MESSAGE_SIZE_THRESHOLD_OUT_OF_RANGE, SQS:OPT_IN_REQUIRED, SQS:PARAMETER_OUT_OF_RANGE, SQS:REQUEST_EXPIRED, SQS:RETRY_EXHAUSTED, SQS:S3_BUCKET_ACCESS_DENIED, SQS:S3_BUCKET_NOT_FOUND, SQS:SERVICE_UNAVAILABLE, SQS:THROTTLING_EXCEPTION" >
 				<ee:transform doc:name="SQS Message" doc:id="b92022c2-eafd-4cab-a6fb-9e73ebc2cccb" >
