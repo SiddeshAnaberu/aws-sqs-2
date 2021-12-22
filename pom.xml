@@ -35,7 +35,7 @@
 					<cloudHubDeployment>
 						<uri>https://anypoint.mulesoft.com</uri>
 						<muleVersion>4.3.0</muleVersion>
-						<username>siddeshtest2</username>
+						<username>siddeshtestaws</username>
 						<password>Ganesha@123</password>
 						<applicationName>awssqs</applicationName>
 						<environment>Sandbox</environment>
